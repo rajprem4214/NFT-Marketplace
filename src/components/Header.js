@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { connectWallet, disconnectWallet, incrementData, decrementData } from '../actions';
 
@@ -16,24 +17,20 @@ const Header = ({Tezos, wallet, setTezos}) => {
     }
 
     return (
-            <div className="ui menu black" style={{'marginTop':'5px'}}>
-                <a href="/#" className="ui header item">Template</a>
-                {(selector.userAddress!=="" )?(
-                <a href="/#" className="item" onClick={()=>dispatch(incrementData({Tezos}))}>Increment Value</a>
-                ):null
-                }   
+        <div className="ui menu black" style={{'marginTop':'5px'}}>
+        <a href="/#" className="ui header item">NFTs</a>
+        <Link className="item" to="/">Home</Link>
 
-                {(selector.userAddress!=="" )?(
-                <a href="/#" className="item" onClick={()=>dispatch(decrementData({Tezos}))}>Decrement Value</a>
-                ):null
-                } 
+        {selector.userAddress!==""?
+        <Link className="item" to="/create">Create NFT</Link>
+        :null}
 
-                <div className="right menu">
-                    {(selector.userAddress==="")?
-                    <a href="/#" className="item" onClick={onClick}>Connect Wallet</a>:
-                    <a href="/#" className="item" onClick={onClick}>Disconnect Wallet</a>}
-                </div>
-            </div>
+        <div className="right menu">
+            {(selector.userAddress==="")?
+            <a href="/#" className="item" onClick={onClick}>Connect Wallet</a>:
+            <a href="/#" className="item" onClick={onClick}>Disconnect Wallet</a>}
+        </div>
+    </div>
         );
 }
 

@@ -9,14 +9,21 @@ import {
   defaultEventCallbacks,
   ColorMode
 } from "@airgap/beacon-sdk";
-
-import { fetchContractData, _walletConfig } from '../actions';
+// import { Route, Routes } from "react-router";
+import { Routes ,Route } from 'react-router-dom';
+import { fetchData, _walletConfig } from '../actions';
+// import {  } from 'react-router';
+import Home from './layouts/Home';
+import Create from './layouts/Create';
+import Show from './layouts/Show';
+// import {Routes} from 
+// import { fetchContractData, _walletConfig } from '../actions';
 
 const App = () => {
     const selector = useSelector(state => state);
     const dispatch = useDispatch();
     const [Tezos, setTezos] = useState(
-        new TezosToolkit("https://hangzhounet.smartpy.io/")
+        new TezosToolkit("https://ghostnet.smartpy.io/")
     );
     const [wallet, setWallet] = useState(null);
 
@@ -24,7 +31,7 @@ const App = () => {
         (async () => {
             const wallet_instance = new BeaconWallet({
                 name: "Template",
-                preferredNetwork: NetworkType.HANGZHOUNET,
+                preferredNetwork: NetworkType.GHOSTNET,
                 colorMode: ColorMode.LIGHT,
                 disableDefaultEvents: false, // Disable all events / UI. This also disables the pairing alert.
                 eventHandlers: {
@@ -54,16 +61,28 @@ const App = () => {
 
 
     useEffect(()=>{
-        dispatch(fetchContractData({Tezos}));
+        dispatch(fetchData());
     },[Tezos, dispatch]);
+
+    // useEffect(()=>{
+    //     dispatch(fetchContractData({Tezos}));
+    // },[Tezos, dispatch]);
 
     return (
         <div className="ui container">
             <Header Tezos={Tezos} setTezos={setTezos} wallet={wallet} />
             <div className="ui container center aligned">
-                <p className="ui">User Address: {selector.walletConfig.user.userAddress}</p>
-                <p className="ui">User Balance: {selector.walletConfig.user.balance}</p>
-                <p className="ui">Storage: {selector.contractStorage} </p>
+            <Routes>
+                    <Route path="/create">
+                        <Create Tezos={Tezos}/>
+                    </Route>
+                    <Route path="/show/:id">
+                        <Show Tezos={Tezos}/>
+                    </Route>
+                    <Route path="/">
+                        <Home Tezos={Tezos}/>
+                    </Route>
+                </Routes>
             </div>
         </div>
     );
