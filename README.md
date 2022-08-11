@@ -134,4 +134,5 @@ amount: The amount at which this NFT will be sold, if the item is collectible
 ## Authors
 
 - [@Prem Raj](https://www.github.com/rajprem4214)
+- [@Nanshi Kumari](https://www.github.com/nanshikumari29)
 
